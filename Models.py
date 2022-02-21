@@ -1,64 +1,67 @@
-class Client(object):
+class Customer(object):
 
     def __init__(self, name, surname, email, phone, company, street, location, postal_code):
-        self.name = name
-        self.surname = surname
-        self.email = email
-        self.phone = phone
-        self.company = company
-        self.street = street
-        self.location = location
-        self.postal_code = postal_code
+        self.__name = name
+        self.__surname = surname
+        self.__email = email
+        self.__phone = phone
+        self.__company = company
+        self.__street = street
+        self.__location = location
+        self.__postal_code = postal_code
     
     def getName(self):
-        return self.name
+        return self.__name
     
     def getSurname(self):
-        return self.surname
+        return self.__surname
 
     def getEmail(self):
-        return self.email
+        return self.__email
 
     def getPhone(self):
-        return self.phone
+        return self.__phone
 
     def getCompany(self):
-        return self.company
+        return self.__company
 
     def getStreet(self):
-        return self.street
+        return self.__street
 
     def getLocation(self):
-        return self.location
+        return self.__location
 
     def getPostalCode(self):
-        return self.postal_code
+        return self.__postal_code
 
 
-class Dispositif(object):
+class Device(object):
 
     def __init__(self, device_manufacturer, type, inductance, dimensions, name, surname):
-        self.device_manufacturer = device_manufacturer
-        self.type = type
-        self.inductance = inductance
-        self.dimensions = dimensions
-        self.nameClient = name
-        self.surnameClient = surname
+        self.__device_manufacturer = device_manufacturer
+        self.__type = type
+        self.__inductance = inductance
+        self.__dimensions = dimensions
+        self.__nameCustomer = name
+        self.__surnameCustomer = surname
 
     def getDeviceManufacturer(self):
-        return self.device_manufacturer
+        return self.__device_manufacturer
 
     def getType(self):
-        return self.type
+        return self.__type
 
     def getInductance(self):
-        return self.inductance
+        return self.__inductance
 
     def getDimensions(self):
-        return self.dimensions
+        return self.__dimensions
 
-    def getNameClient(self):
-        return self.nameClient
+    def getNameCustomer(self):
+        return self.__nameCustomer
 
-    def getSurnameClient(self):
-        return self.surnameClient
+    def getSurnameCustomer(self):
+        return self.__surnameCustomer
+
+
+
