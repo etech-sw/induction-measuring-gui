@@ -1,5 +1,4 @@
 from tkinter import Label
-import tkinter.font as tkFont
 from DAO_Module.CustomerDAO import CustomerDAO
 from DAO_Module.DeviceDAO import DeviceDAO
 
@@ -11,7 +10,7 @@ def display_last_customers(secondFrame):
     compt, row = 1, 2
     # Affichage sur l'interface
     for customer in customers:
-        Label(secondFrame, text=str(compt)+"."+customer[1], justify="right", background="red", foreground="white", font=tkFont.Font(family="Sans Serif", size=10, weight="bold")).grid(row=row, column=0, pady=10)
+        Label(secondFrame, text=str(compt)+"."+customer[1], justify="right", background="red", foreground="white", font="Sans-Serif 10 bold").grid(row=row, column=0, pady=10)
         compt += 1
         row += 1
         if (compt > 5):
@@ -25,7 +24,7 @@ def display_last_devices(secondFrame):
     compt, row = 1, 2
     # Affichage sur l'interface
     for device in devices:
-        Label(secondFrame, text=str(compt)+"."+device[1], justify="right", background="red", foreground="white", font=tkFont.Font(family="Sans Serif", size=10, weight="bold")).grid(row=row, column=1, pady=10)
+        Label(secondFrame, text=str(compt)+"."+device[1], justify="right", background="red", foreground="white", font="Sans-Serif 10 bold").grid(row=row, column=1, pady=10)
         compt += 1
         row += 1
         if (compt > 5):

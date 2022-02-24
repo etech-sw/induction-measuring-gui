@@ -1,4 +1,6 @@
 from tkinter import *
+from DAO_Module.CustomerDAO import CustomerDAO
+from Models import Customer
 
 def registerCustomer():
 
@@ -21,42 +23,43 @@ def registerCustomer():
         surnameEntry.delete(0, len(surnameEntry.get()))
 
 
-    # def save():
-    #     company = companyEntry.get()
-    #     street = streetEntry.get()
-    #     location = locationEntry.get()
-    #     postal_code = postalEntry.get()
-    #     phone = phoneEntry.get()
-    #     email = emailEntry.get()
-    #     name = nameEntry.get()
-    #     surname =  surnameEntry.get()
-    #     if (phone != "" and name != "" and surname != ""):
-    #         try:
-    #             phone = int(phone)
-    #         except:
-    #             phoneEntry.configure(bg="darkred", foreground="white")
-    #             window.after(1000,  clearAllEntry)
-    #         else:
-    #             print("Saved !")
-    #             companyEntry.config(bg="green")
-    #             streetEntry.config(bg="green")
-    #             locationEntry.config(bg="green")
-    #             postalEntry.config(bg="green")
-    #             phoneEntry.config(bg="green")
-    #             emailEntry.config(bg="green")
-    #             nameEntry.config(bg="green")
-    #             surnameEntry.config(bg="green")
-    #     else:
-    #         if phone == "":
-    #             phoneEntry.configure(bg="darkred")
-    #         if name == "":
-    #             nameEntry.configure(bg="darkred", invalidcommand="Test")
-    #         if surname == "":
-    #             surnameEntry.configure(bg="darkred")
-    #         window.after(1000,  clearAllEntry)
+    def save():
+        company = companyEntry.get()
+        street = streetEntry.get()
+        location = locationEntry.get()
+        postal_code = postalEntry.get()
+        phone = phoneEntry.get()
+        email = emailEntry.get()
+        name = nameEntry.get()
+        surname =  surnameEntry.get()
+        customer = Customer(name, surname, email, phone, company, street, location, postal_code)
+        if (phone != "" and name != "" and surname != "" and email != "" and postal_code != "" and company != "" and street != "" and location != ""):
+            try:
+                phone = int(phone)
+            except:
+                err = 1
+            else:
+                err = 0
+            if (err == 1 or len(str(phone)) < 9):
+                message.configure(text="The phone number is invalid: It must be a set of at least 9 digits !")
+            else:
+                customerDAO = CustomerDAO()
+                customerDAO.register_customer(customer)
+                print("Saved !")
+                companyEntry.config(bg="green")
+                streetEntry.config(bg="green")
+                locationEntry.config(bg="green")
+                postalEntry.config(bg="green")
+                phoneEntry.config(bg="green")
+                emailEntry.config(bg="green")
+                nameEntry.config(bg="green")
+                surnameEntry.config(bg="green")
+                window.after(1000, clearAllEntry)
+        else:
+            message.configure(text="All information must be provided !")
+        window.after(100, window.destroy)
         
         
-
     window = Tk()
     window.title("Customer Registration")
     frame = Frame(window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
@@ -69,19 +72,19 @@ def registerCustomer():
     formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
     formFrame.grid(row=1, column=0, padx=10, pady=10)
  
-    companyLabel = Label(formFrame, text="Company", background="red", foreground="white", font="sans-serif 15 bold underline")
+    companyLabel = Label(formFrame, text="Company*", background="red", foreground="white", font="sans-serif 15 bold underline")
     companyLabel.grid(row=0, padx=20, pady=10, sticky=W)
     companyEntry = Entry(formFrame, width=50)
     companyEntry.grid(row=0, column=1, padx=20)
-    streetLabel = Label(formFrame, text="Street", background="red", foreground="white", font="sans-serif 15 bold underline")
+    streetLabel = Label(formFrame, text="Street*", background="red", foreground="white", font="sans-serif 15 bold underline")
     streetLabel.grid(row=1, padx=20, pady=10, sticky=W)
     streetEntry = Entry(formFrame, width=50)
     streetEntry.grid(row=1, column=1, padx=20)
-    locationLabel = Label(formFrame, text="Location", background="red", foreground="white", font="sans-serif 15 bold underline")
+    locationLabel = Label(formFrame, text="Location*", background="red", foreground="white", font="sans-serif 15 bold underline")
     locationLabel.grid(row=2, padx=20, pady=10, sticky=W)
     locationEntry = Entry(formFrame, width=50)
     locationEntry.grid(row=2, column=1, padx=20)
-    postalLabel = Label(formFrame, text="Postal Code", background="red", foreground="white", font="sans-serif 15 bold underline")
+    postalLabel = Label(formFrame, text="Postal Code*", background="red", foreground="white", font="sans-serif 15 bold underline")
     postalLabel.grid(row=3, padx=20, pady=10, sticky=W)
     postalEntry = Entry(formFrame, width=50)
     postalEntry.grid(row=3, column=1, padx=20)
@@ -89,7 +92,7 @@ def registerCustomer():
     phoneLabel.grid(row=4, padx=20, pady=10, sticky=W)
     phoneEntry = Entry(formFrame, width=50)
     phoneEntry.grid(row=4, column=1, padx=20)
-    emailLabel = Label(formFrame, text="Email", background="red", foreground="white", font="sans-serif 15 bold underline")
+    emailLabel = Label(formFrame, text="Email*", background="red", foreground="white", font="sans-serif 15 bold underline")
     emailLabel.grid(row=5, padx=20, pady=10, sticky=W)
     emailEntry = Entry(formFrame, width=50)
     emailEntry.grid(row=5, column=1, padx=20)
@@ -102,9 +105,11 @@ def registerCustomer():
     surnameEntry = Entry(formFrame, width=50)
     surnameEntry.grid(row=7, column=1, padx=20)
 
+    message = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
+    message.grid(row=8, column=1, padx=5, pady=5)
     saveButton = Button(formFrame, text="Save", command=save, width=10, background="green", foreground="white", font="Sans-Serif 15 bold")
-    saveButton.grid(row=8, column=0, padx=30, pady=20)
+    saveButton.grid(row=9, column=0, padx=30, pady=20)
     cancelButton = Button(formFrame, text="Cancel", command=window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold")
-    cancelButton.grid(row=8, column=1, padx=10, pady=20)
+    cancelButton.grid(row=9, column=1, padx=10, pady=20)
 
     window.mainloop()

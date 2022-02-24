@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter.font as tkFont
 from Button_functions import registerCustomer
 from Data_functions import *
 
@@ -18,24 +17,24 @@ def homePage():
     measureButton.configure(background="red")
     titleLabel.configure(text="Home Page")
     # HOME FRAME
-    homeTitleFrame = Label(secondFrame, text="Last edit...", background="red", foreground="white", font=tkFont.Font(family="Sans Serif", size=20, weight="bold"))
+    homeTitleFrame = Label(secondFrame, text="Last edit...", background="red", foreground="white", font="Sans-Serif 20 ")
     homeTitleFrame.grid(row=0, column=0, columnspan=3, padx=10, pady=20)
 
     ## CUSTOMER COLUMN
-    customersColumn = Label(secondFrame, text="Customers", width=20, background="red", foreground="white", font=tkFont.Font(family="Sans Serif", size=15, weight="bold", underline=True))
+    customersColumn = Label(secondFrame, text="Customers", width=20, background="red", foreground="white", font="Sans-Serif 15 bold underline")
     customersColumn.grid(row=1, column=0, padx=5, pady=10, sticky=W)
     
     display_last_customers(secondFrame)
     ## CUSTOMER COLUMN END
 
     ## DEVICE COLOUMN
-    devicesColumn = Label(secondFrame, text="Devices", width=20, background="red", foreground="white", font=tkFont.Font(family="Sans Serif", size=15, weight="bold", underline=True))
+    devicesColumn = Label(secondFrame, text="Devices", width=20, background="red", foreground="white", font="Sans-Serif 15 bold underline")
     devicesColumn.grid(row=1, column=1, padx=5, pady=10)
     
     display_last_devices(secondFrame)
     ## DEVICE COLUMN END
 
-    measuresColumn = Label(secondFrame, text="Measures", background="red", width=20, foreground="white", font=tkFont.Font(family="Sans Serif", size=15, weight="bold", underline=True))
+    measuresColumn = Label(secondFrame, text="Measures", background="red", width=20, foreground="white", font="Sans-Serif 15 bold underline")
     measuresColumn.grid(row=1, column=2, padx=5, pady=10)
     # END HOME FRAME
 
@@ -101,9 +100,13 @@ def customerPage():
     # BUTTON SECTION CUSTOMERS
     registerCustomerButton = Button(secondFrame, text="Register", command=registerCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
     registerCustomerButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
+    
 
     registerDeviceButton = Button(secondFrame, text="Register Device", background="green", foreground="white", font="Sans-Serif 15 bold")
     registerDeviceButton.grid(row=1, column=4, columnspan=3, padx=10, pady=10, ipadx=5, ipady=5)
+
+    reloadButton = Button(secondFrame, text="Reload", command=customerPage, background="yellow", foreground="black", font="Sans-Serif 15 bold")
+    reloadButton.grid(row=1, column=3, padx=10, pady=10, ipadx=5, ipady=5)
 
     deleteCustomerButton = Button(secondFrame, text="Delete", background="darkred", foreground="white", font="Sans-Serif 15 bold")
     deleteCustomerButton.grid(row=1, column=7, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
