@@ -40,6 +40,16 @@ def homePage():
 
 
 def customerPage():
+
+    # Fonction qui supprime un client
+    def deleteCustomer():
+        selected = treeView.focus()
+        values = treeView.item(selected, "values")
+        customerDAO = CustomerDAO()
+        customerDAO.delete_customer(int(values[0]))
+        customerPage()
+
+
     clear_frame()
     homeButton.configure(background="red")
     customerButton.configure(background="deepskyblue")
@@ -56,7 +66,8 @@ def customerPage():
     style.configure("Treeview",
         background="red",
         foreground="white",
-        fieldbackground="red"
+        fieldbackground="red",
+        font="Sans-Serif 13 bold"
     )
     ## Configuration du style au niveau des selections
     style.map("Treeview",
@@ -108,7 +119,7 @@ def customerPage():
     reloadButton = Button(secondFrame, text="Reload", command=customerPage, background="yellow", foreground="black", font="Sans-Serif 15 bold")
     reloadButton.grid(row=1, column=3, padx=10, pady=10, ipadx=5, ipady=5)
 
-    deleteCustomerButton = Button(secondFrame, text="Delete", background="darkred", foreground="white", font="Sans-Serif 15 bold")
+    deleteCustomerButton = Button(secondFrame, text="Delete", command=deleteCustomer, background="darkred", foreground="white", font="Sans-Serif 15 bold")
     deleteCustomerButton.grid(row=1, column=7, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
     # END BUTTON SECTION CUSTOMERS
 
@@ -143,7 +154,7 @@ menuLabel = Label(mainFrame, text="Menu", width=10, height=3, background="red", 
 menuLabel.grid(row=0, column=0, padx=40, pady=20)
 
 titleLabel = Label(mainFrame, text="Home Page", width=65, height=3, background="red", foreground="white", highlightbackground="black", 
-                    highlightthickness=3, font="Sans-Serif 15 bold")
+                    highlightthickness=3, font="Sans-Serif 16 bold")
 titleLabel.grid(row=0, column=1, padx=5, pady=20)
 
 # END LABEL SECTION
