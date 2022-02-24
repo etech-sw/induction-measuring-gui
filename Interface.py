@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from Button_functions import registerCustomer
+from Button_functions import registerCustomer, registerDevice
 from Data_functions import *
 
 # Fonction qui vide le frame
@@ -112,8 +112,7 @@ def customerPage():
     registerCustomerButton = Button(secondFrame, text="Register", command=registerCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
     registerCustomerButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
     
-
-    registerDeviceButton = Button(secondFrame, text="Register Device", background="green", foreground="white", font="Sans-Serif 15 bold")
+    registerDeviceButton = Button(secondFrame, text="Register Device", command=registerDevice, background="green", foreground="white", font="Sans-Serif 15 bold")
     registerDeviceButton.grid(row=1, column=4, columnspan=3, padx=10, pady=10, ipadx=5, ipady=5)
 
     reloadButton = Button(secondFrame, text="Reload", command=customerPage, background="yellow", foreground="black", font="Sans-Serif 15 bold")
@@ -125,12 +124,87 @@ def customerPage():
 
 
 def devicePage():
+
+    # Fonction qui supprime un dispositif
+    def deleteDevice():
+        selected = treeView.focus()
+        values = treeView.item(selected, "values")
+        deviceDAO = DeviceDAO()
+        deviceDAO.delete_device(int(values[0]))
+        devicePage()
+
+
     clear_frame()
     homeButton.configure(background="red")
     customerButton.configure(background="red")
     deviceButton.configure(background="deepskyblue")
     measureButton.configure(background="red")
     titleLabel.configure(text="Devices Pages")
+
+     # SECTION STYLE OF TREEVIEW DEVICES
+    ## Creation du style
+    style = ttk.Style()
+    ## Definition du theme a utiliser
+    style.theme_use("default")
+    ## Configuration du style
+    style.configure("Treeview",
+        background="red",
+        foreground="white",
+        fieldbackground="red",
+        font="Sans-Serif 13 bold"
+    )
+    ## Configuration du style au niveau des selections
+    style.map("Treeview",
+       background=[("selected", "lightpink")],
+       foreground=[("selected", "black")]
+    )
+    # END SECTION STYLE TREEVIEW DEVICES
+    
+    ## Creation du frame de la treeView
+    treeFrame = Frame(secondFrame)
+    treeFrame.grid(row=0, column=0, columnspan=9, padx=5, pady=5)
+
+    # SECTION SCROLLBAR
+    scroll = Scrollbar(treeFrame)
+    scroll.pack(side=RIGHT, fill=Y)
+    # END SECTION SCROLLBAR
+
+    # SECTION TREEVIEW DEVICES
+    ## Creation du Treeview et configuration du scrollbar
+    treeView = ttk.Treeview(treeFrame, yscrollcommand=scroll.set)
+    treeView.pack()
+    scroll.config(command=treeView.yview)
+    ## Definition des colonnes
+    treeView["columns"] = ("ID", "Device Manufacturer", "Type", "Inductance", "Dimensions", "Name", "Surname")
+    columns = ["ID", "Device Manufacturer", "Type", "Inductance", "Dimensions", "Name", "Surname"]
+    ## Formatage des colonnes
+    treeView.column("#0", width=0,stretch=NO)
+    treeView.column(columns[0], anchor=CENTER, minwidth=20, width=20)
+    for i in range(1, len(columns)):
+        treeView.column(columns[i], anchor=W, minwidth=120, width=120)
+    ## Creation des rubriques
+    treeView.heading("#0", text="")
+    treeView.heading(columns[0], text=columns[0], anchor=CENTER)
+    for i in range(1, len(columns)):
+        treeView.heading(columns[i], text=columns[i], anchor=W)
+    ## Ajout des donnees
+    display_devices_data(treeView)
+
+    # END SECTION TREEVIEW DEVICES
+
+    # BUTTON SECTION DEVICES
+    registerDeviceButton = Button(secondFrame, text="Register", command=registerDevice, background="green", foreground="white", font="Sans-Serif 15 bold")
+    registerDeviceButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
+    
+    registerCustomerButton = Button(secondFrame, text="Register Customer", command=registerCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
+    registerCustomerButton.grid(row=1, column=4, columnspan=3, padx=10, pady=10, ipadx=5, ipady=5)
+
+    reloadButton = Button(secondFrame, text="Reload", command=devicePage, background="yellow", foreground="black", font="Sans-Serif 15 bold")
+    reloadButton.grid(row=1, column=3, padx=10, pady=10, ipadx=5, ipady=5)
+
+    deleteDeviceButton = Button(secondFrame, text="Delete", command=deleteDevice, background="darkred", foreground="white", font="Sans-Serif 15 bold")
+    deleteDeviceButton.grid(row=1, column=7, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
+    # END BUTTON SECTION DEVICES
 
 
 def mesurePage():

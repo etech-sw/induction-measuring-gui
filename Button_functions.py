@@ -1,27 +1,8 @@
 from tkinter import *
 from DAO_Module.CustomerDAO import CustomerDAO
-from Models import Customer
+from Models import Customer, Device
 
 def registerCustomer():
-
-    def clearAllEntry():
-        companyEntry.configure(bg="white")
-        companyEntry.delete(0, len(companyEntry.get()))
-        streetEntry.configure(bg="white")
-        streetEntry.delete(0, len(streetEntry.get()))
-        locationEntry.configure(bg="white")
-        locationEntry.delete(0, len(locationEntry.get()))
-        postalEntry.configure(bg="white")
-        postalEntry.delete(0, len(postalEntry.get()))
-        phoneEntry.configure(bg="white")
-        phoneEntry.delete(0, len(phoneEntry.get()))
-        emailEntry.configure(bg="white")
-        emailEntry.delete(0, len(emailEntry.get()))
-        nameEntry.configure(bg="white")
-        nameEntry.delete(0, len(nameEntry.get()))
-        surnameEntry.configure(bg="white")
-        surnameEntry.delete(0, len(surnameEntry.get()))
-
 
     def save():
         company = companyEntry.get()
@@ -54,10 +35,9 @@ def registerCustomer():
                 emailEntry.config(bg="green")
                 nameEntry.config(bg="green")
                 surnameEntry.config(bg="green")
-                window.after(1000, clearAllEntry)
         else:
             message.configure(text="All information must be provided !")
-        window.after(100, window.destroy)
+        window.after(1000, window.destroy)
         
         
     window = Tk()
@@ -111,5 +91,64 @@ def registerCustomer():
     saveButton.grid(row=9, column=0, padx=30, pady=20)
     cancelButton = Button(formFrame, text="Cancel", command=window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold")
     cancelButton.grid(row=9, column=1, padx=10, pady=20)
+
+    window.mainloop()
+
+
+def registerDevice():
+    
+    def save():
+        device_manufacturer = manufacturerEntry.get()
+        type = typeEntry.get()
+        inductance = inductanceEntry.get()
+        dimensions = dimensionsEntry.get()
+        name = nameEntry.get()
+        surname =  surnameEntry.get()
+        device = Device(device_manufacturer, type, inductance, dimensions, name, surname)
+        
+        
+    window = Tk()
+    window.title("Device Registration")
+    frame = Frame(window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
+    frame.pack(ipadx=5, ipady=20)
+    
+    title = Label(frame, text="Device Registration", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
+                         width=40, height=3, font="sans-serif 18 bold")
+    title.grid(row=0, column=0, padx=20, pady=20)
+
+    formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
+    formFrame.grid(row=1, column=0, padx=10, pady=10)
+ 
+    manufacturerLabel = Label(formFrame, text="Device Manufacturer*", background="red", foreground="white", font="sans-serif 15 bold underline")
+    manufacturerLabel.grid(row=0, padx=20, pady=10, sticky=W)
+    manufacturerEntry = Entry(formFrame, width=50)
+    manufacturerEntry.grid(row=0, column=1, padx=20)
+    typeLabel = Label(formFrame, text="Type*", background="red", foreground="white", font="sans-serif 15 bold underline")
+    typeLabel.grid(row=1, padx=20, pady=10, sticky=W)
+    typeEntry = Entry(formFrame, width=50)
+    typeEntry.grid(row=1, column=1, padx=20)
+    inductanceLabel = Label(formFrame, text="Inductance*", background="red", foreground="white", font="sans-serif 15 bold underline")
+    inductanceLabel.grid(row=2, padx=20, pady=10, sticky=W)
+    inductanceEntry = Entry(formFrame, width=50)
+    inductanceEntry.grid(row=2, column=1, padx=20)
+    dimensionsLabel = Label(formFrame, text="Dimensions*", background="red", foreground="white", font="sans-serif 15 bold underline")
+    dimensionsLabel.grid(row=3, padx=20, pady=10, sticky=W)
+    dimensionsEntry = Entry(formFrame, width=50)
+    dimensionsEntry.grid(row=3, column=1, padx=20)
+    nameLabel = Label(formFrame, text="Name*", background="red", foreground="white", font="sans-serif 15 bold underline")
+    nameLabel.grid(row=4, padx=20, pady=10, sticky=W)
+    nameEntry = Entry(formFrame, width=50)
+    nameEntry.grid(row=4, column=1, padx=20)
+    surnameLabel = Label(formFrame, text="Surname*", background="red", foreground="white", font="sans-serif 15 bold underline")
+    surnameLabel.grid(row=5, padx=20, pady=10, sticky=W)
+    surnameEntry = Entry(formFrame, width=50)
+    surnameEntry.grid(row=5, column=1, padx=20)
+
+    message = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
+    message.grid(row=6, column=1, padx=5, pady=5)
+    saveButton = Button(formFrame, text="Save", command=save, width=10, background="green", foreground="white", font="Sans-Serif 15 bold")
+    saveButton.grid(row=7, column=0, padx=30, pady=20)
+    cancelButton = Button(formFrame, text="Cancel", command=window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold")
+    cancelButton.grid(row=7, column=1, padx=10, pady=20)
 
     window.mainloop()

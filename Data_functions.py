@@ -38,3 +38,14 @@ def display_customers_data(treeView):
     for customer in customers:
         treeView.insert(parent="", index="end", iid=id, text="", values=(customer[0], customer[5], customer[6], customer[7], customer[8], customer[4], customer[3], customer[1], customer[2]))
         id += 1
+
+
+def display_devices_data(treeView):
+    deviceDAO = DeviceDAO()
+    devices = deviceDAO.get_all_devices()
+    id = 0
+    for device in devices:
+        treeView.insert(parent="", index="end", iid=id, text="", values=(device[0], device[1], device[2], device[3], device[4], device[5], device[6]))
+        id += 1
+
+
