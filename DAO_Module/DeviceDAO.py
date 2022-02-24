@@ -24,6 +24,9 @@ class DeviceDAO(AbstractDeviceDAO):
             self.__mCursor.execute(request, value)
             self.__mDb.commit()
             print(f"{self.__mCursor.rowcount}, record inserted")
+            return True
+        else:
+            return False
     
 
     def delete_device(self, id_device):

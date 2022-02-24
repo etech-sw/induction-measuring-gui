@@ -1,5 +1,6 @@
 from tkinter import *
 from DAO_Module.CustomerDAO import CustomerDAO
+from DAO_Module.DeviceDAO import DeviceDAO
 from Models import Customer, Device
 
 def registerCustomer():
@@ -13,7 +14,15 @@ def registerCustomer():
         email = emailEntry.get()
         name = nameEntry.get()
         surname =  surnameEntry.get()
-        customer = Customer(name, surname, email, phone, company, street, location, postal_code)
+        customer = Customer(
+            name.capitalize(), 
+            surname.capitalize(), 
+            email.lower(), 
+            phone, 
+            company, 
+            street.capitalize(), 
+            location.capitalize(), 
+            postal_code)
         if (phone != "" and name != "" and surname != "" and email != "" and postal_code != "" and company != "" and street != "" and location != ""):
             try:
                 phone = int(phone)
@@ -35,9 +44,9 @@ def registerCustomer():
                 emailEntry.config(bg="green")
                 nameEntry.config(bg="green")
                 surnameEntry.config(bg="green")
+                window.after(1000, window.destroy)
         else:
             message.configure(text="All information must be provided !")
-        window.after(1000, window.destroy)
         
         
     window = Tk()
@@ -104,7 +113,38 @@ def registerDevice():
         dimensions = dimensionsEntry.get()
         name = nameEntry.get()
         surname =  surnameEntry.get()
-        device = Device(device_manufacturer, type, inductance, dimensions, name, surname)
+        device = Device(
+            device_manufacturer.capitalize(), 
+            type.capitalize(), 
+            inductance, 
+            dimensions, 
+            name.capitalize(), 
+            surname.capitalize())
+        if (device_manufacturer != "" and type != "" and inductance != "" and dimensions != "" and name != "" and surname != ""):
+            try:
+                inductance = float(inductance)
+            except:
+                err = 1
+            else:
+                err = 0
+            if (err == 1):
+                message.configure(text="Enter a numeric for inductance")
+            else:
+                deviceDAO = DeviceDAO()
+                result = deviceDAO.register_device(device)
+                if (result):
+                    print("Saved!")
+                    manufacturerEntry.config(bg="green")
+                    typeEntry.config(bg="green")
+                    inductanceEntry.config(bg="green")
+                    dimensionsEntry.config(bg="green")
+                    nameEntry.config(bg="green")
+                    surnameEntry.config(bg="green")
+                    window.after(1000, window.destroy)
+                else:
+                    message.configure(text="Customer information not found") 
+        else:
+            message.configure(text="All information must be provided !")
         
         
     window = Tk()
