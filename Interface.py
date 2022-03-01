@@ -3,7 +3,7 @@ from tkinter import ttk
 from Button_functions import registerCustomer, registerDevice
 from Data_functions import *
 
-# Fonction qui vide le frame
+# Function that clears the frame
 def clear_frame():
     for widgets in secondFrame.winfo_children():
         widgets.destroy()
@@ -41,7 +41,7 @@ def homePage():
 
 def customerPage():
 
-    # Fonction qui supprime un client
+    # Function that removes a client
     def deleteCustomer():
         selected = treeView.focus()
         values = treeView.item(selected, "values")
@@ -62,21 +62,21 @@ def customerPage():
     style = ttk.Style()
     ## Definition du theme a utiliser
     style.theme_use("default")
-    ## Configuration du style
+    ## Style configuration
     style.configure("Treeview",
         background="red",
         foreground="white",
         fieldbackground="red",
         font="Sans-Serif 13 bold"
     )
-    ## Configuration du style au niveau des selections
+    ## Configuration of the style at the level of the selections
     style.map("Treeview",
        background=[("selected", "lightpink")],
        foreground=[("selected", "black")]
     )
     # END SECTION STYLE TREEVIEW CUSTOMERS
     
-    ## Creation du frame de la treeView
+    ## Creation of the treeView frame
     treeFrame = Frame(secondFrame)
     treeFrame.grid(row=0, column=0, columnspan=9, padx=5, pady=5)
 
@@ -86,24 +86,24 @@ def customerPage():
     # END SECTION SCROLLBAR
 
     # SECTION TREEVIEW CUSTOMERS
-    ## Creation du Treeview et configuration du scrollbar
+    ## Treeview creation and scrollbar configuration
     treeView = ttk.Treeview(treeFrame, yscrollcommand=scroll.set)
     treeView.pack()
     scroll.config(command=treeView.yview)
-    ## Definition des colonnes
+    ## Definition of columns
     treeView["columns"] = ("ID", "Company", "Street", "Location", "Postal Code", "Phone", "Email", "Name", "Surname")
     columns = ["ID", "Company", "Street", "Location", "Postal Code", "Phone", "Email", "Name", "Surname"]
-    ## Formatage des colonnes
+    ## Column formatting
     treeView.column("#0", width=0,stretch=NO)
     treeView.column(columns[0], anchor=CENTER, minwidth=20, width=20)
     for i in range(1, len(columns)):
         treeView.column(columns[i], anchor=W, minwidth=100, width=100)
-    ## Creation des rubriques
+    ## Creation of headings
     treeView.heading("#0", text="")
     treeView.heading(columns[0], text=columns[0], anchor=CENTER)
     for i in range(1, len(columns)):
         treeView.heading(columns[i], text=columns[i], anchor=W)
-    ## Ajout des donnees
+    ## Adding data
     display_customers_data(treeView)
 
     # END SECTION TREEVIEW CUSTOMERS
@@ -125,7 +125,7 @@ def customerPage():
 
 def devicePage():
 
-    # Fonction qui supprime un dispositif
+    # Function that removes a device
     def deleteDevice():
         selected = treeView.focus()
         values = treeView.item(selected, "values")
@@ -142,25 +142,25 @@ def devicePage():
     titleLabel.configure(text="Devices Pages")
 
      # SECTION STYLE OF TREEVIEW DEVICES
-    ## Creation du style
+    ## Creation of the style
     style = ttk.Style()
-    ## Definition du theme a utiliser
+    ## Definition of the theme to be used
     style.theme_use("default")
-    ## Configuration du style
+    ## Style configuration
     style.configure("Treeview",
         background="red",
         foreground="white",
         fieldbackground="red",
         font="Sans-Serif 13 bold"
     )
-    ## Configuration du style au niveau des selections
+    ## Configuration of the style at the level of the selections
     style.map("Treeview",
        background=[("selected", "lightpink")],
        foreground=[("selected", "black")]
     )
     # END SECTION STYLE TREEVIEW DEVICES
     
-    ## Creation du frame de la treeView
+    ## Creation of the treeView frame
     treeFrame = Frame(secondFrame)
     treeFrame.grid(row=0, column=0, columnspan=9, padx=5, pady=5)
 
@@ -170,24 +170,24 @@ def devicePage():
     # END SECTION SCROLLBAR
 
     # SECTION TREEVIEW DEVICES
-    ## Creation du Treeview et configuration du scrollbar
+    ## Treeview creation and scrollbar configuration
     treeView = ttk.Treeview(treeFrame, yscrollcommand=scroll.set)
     treeView.pack()
     scroll.config(command=treeView.yview)
-    ## Definition des colonnes
+    ## Definition of columns
     treeView["columns"] = ("ID", "Device Manufacturer", "Type", "Inductance", "Dimensions", "Name", "Surname")
     columns = ["ID", "Device Manufacturer", "Type", "Inductance", "Dimensions", "Name", "Surname"]
-    ## Formatage des colonnes
+    ## Column formatting
     treeView.column("#0", width=0,stretch=NO)
     treeView.column(columns[0], anchor=CENTER, minwidth=20, width=20)
     for i in range(1, len(columns)):
         treeView.column(columns[i], anchor=W, minwidth=120, width=120)
-    ## Creation des rubriques
+    ## Creation of headings
     treeView.heading("#0", text="")
     treeView.heading(columns[0], text=columns[0], anchor=CENTER)
     for i in range(1, len(columns)):
         treeView.heading(columns[i], text=columns[i], anchor=W)
-    ## Ajout des donnees
+    ## Adding data
     display_devices_data(treeView)
 
     # END SECTION TREEVIEW DEVICES

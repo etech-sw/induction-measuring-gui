@@ -4,9 +4,9 @@ import mysql.connector as mysql
 class CustomerDAO (AbstractCustomerDAO):
     def __connexion(self):
         self.__mDb = mysql.connect(
-            host = "localhost",
-            user = "root",
-            password = "12345678",
+            host = "127.0.0.1",
+            user = "appuser",
+            password = "hund1234",
             database = "guidatabase"
         )
         self.__mCursor = self.__mDb.cursor()

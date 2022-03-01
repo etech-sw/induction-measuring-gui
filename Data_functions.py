@@ -4,11 +4,11 @@ from DAO_Module.DeviceDAO import DeviceDAO
 
 
 def display_last_customers(secondFrame):
-    # Initialisation et recuperation de la BD
+    # Initialization and recovery of the database
     customerDAO = CustomerDAO()
     customers = customerDAO.get_last_customers()
     compt, row = 1, 2
-    # Affichage sur l'interface
+    # Display on the interface
     for customer in customers:
         Label(secondFrame, text=str(compt)+"."+customer[1], justify="right", background="red", foreground="white", font="Sans-Serif 10 bold").grid(row=row, column=0, pady=10)
         compt += 1
@@ -18,11 +18,11 @@ def display_last_customers(secondFrame):
 
 
 def display_last_devices(secondFrame):
-    # Initialisation et recuperation de la BD
+    # Initialization and recovery of the database
     deviceDAO = DeviceDAO()
     devices = deviceDAO.get_last_devices()
     compt, row = 1, 2
-    # Affichage sur l'interface
+    # Display on the interface
     for device in devices:
         Label(secondFrame, text=str(compt)+"."+device[1], justify="right", background="red", foreground="white", font="Sans-Serif 10 bold").grid(row=row, column=1, pady=10)
         compt += 1
