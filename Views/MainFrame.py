@@ -2,6 +2,7 @@ from tkinter import *
 from Views.CustomersFrame import CustomersFrame
 from Views.HomeFrame import HomeFrame
 from Views.DevicesFrame import DevicesFrame
+from Views.MeasuresFrame import MeasuresFrame
 
 
 class MainFrame(Frame):
@@ -68,3 +69,5 @@ class MainFrame(Frame):
         self.deviceButton.configure(background="red")
         self.measureButton.configure(background="deepskyblue")
         self.titleLabel.configure(text="Measures Page")
+        self.frame = MeasuresFrame(self)
+        self.frame.grid(row=1, column=1, rowspan=7, ipadx=5, ipady=5, padx=5)
