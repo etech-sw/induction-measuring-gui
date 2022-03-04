@@ -1,13 +1,14 @@
 from tkinter import *
 from tkinter import ttk
 from DAO_Module.CustomerDAO import CustomerDAO
+from DAO_Module.DeviceDAO import DeviceDAO
 from Data_functions import display_customers_data
-from Models import Customer
+from Models import Customer, Device
 
 class CustomersFrame(Frame):
     def __init__(self, root):
         Frame.__init__(self, master=root, width=780, height=450, background="red", highlightbackground="black", highlightthickness=3)
-        # SECTION STYLE OF TREEVIEW DEVICES
+        # SECTION STYLE OF TREEVIEW CUSTOMERS
         ## Creation of the style
         self.style = ttk.Style()
         ## Definition of the style to be used
@@ -24,7 +25,7 @@ class CustomersFrame(Frame):
             background=[("selected", "lightpink")],
             foreground=[("selected", "black")]
         )
-        # END SECTION STYLE TREEVIEW DEVICES
+        # END SECTION STYLE TREEVIEW CUSTOMERS
 
         ## Creation of the treeview frame
         self.treeFrame = Frame(self)
@@ -35,7 +36,7 @@ class CustomersFrame(Frame):
         self.scroll.pack(side=RIGHT, fill=Y)
         # END SECTION SCROLLBAR
 
-        # SECTION TREEVIEW DEVICES
+        # SECTION TREEVIEW CUSTOMERS
         ## Creation of the Treeview and configuration of the scrollbar
         self.treeView = ttk.Treeview(self.treeFrame, yscrollcommand=self.scroll.set)
         self.treeView.pack()
@@ -45,7 +46,7 @@ class CustomersFrame(Frame):
         columns = ["ID", "Company", "Street", "Location", "Postal Code", "Phone", "Email", "Name", "Surname"]
         ## Formatting columns
         self.treeView.column("#0", width=0,stretch=NO)
-        self.treeView.column(columns[0], anchor=CENTER, minwidth=20, width=20)
+        self.treeView.column(columns[0], anchor=CENTER, minwidth=30, width=30)
         for i in range(1, len(columns)):
             self.treeView.column(columns[i], anchor=W, minwidth=100, width=100)
         ## Creation of headings
@@ -55,18 +56,18 @@ class CustomersFrame(Frame):
             self.treeView.heading(columns[i], text=columns[i], anchor=W)
         ## Adding data
         display_customers_data(self.treeView)
-        # END SECTION TREEVIEW DEVICES
+        # END SECTION TREEVIEW CUSTOMERS
 
-        # BUTTON SECTION DEVICES
+        # BUTTON SECTION CUSTOMERS
         self.registerCustomerButton = Button(self, text="Register", command=self.registerCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
         self.registerCustomerButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
-        self.registerDeviceButton = Button(self, text="Register Device", command=None, background="green", foreground="white", font="Sans-Serif 15 bold")
+        self.registerDeviceButton = Button(self, text="Register Device", command=self.registerDevice, background="green", foreground="white", font="Sans-Serif 15 bold")
         self.registerDeviceButton.grid(row=1, column=4, columnspan=3, padx=10, pady=10, ipadx=5, ipady=5)
         self.reloadButton = Button(self, text="Reload", command=self.reload, background="yellow", foreground="black", font="Sans-Serif 15 bold")
         self.reloadButton.grid(row=1, column=3, padx=10, pady=10, ipadx=5, ipady=5)
         self.deleteCustomerButton = Button(self, text="Delete", command=self.deleteCustomer, background="darkred", foreground="white", font="Sans-Serif 15 bold")
         self.deleteCustomerButton.grid(row=1, column=7, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
-        # END BUTTON SECTION DEVICES
+        # END BUTTON SECTION CUSTOMERS
 
 
     def __saveCustomerInformation(self):
@@ -174,7 +175,7 @@ class CustomersFrame(Frame):
         self.treeView["columns"] = ("ID", "Company", "Street", "Location", "Postal Code", "Phone", "Email", "Name", "Surname")
         columns = ["ID", "Company", "Street", "Location", "Postal Code", "Phone", "Email", "Name", "Surname"]
         self.treeView.column("#0", width=0,stretch=NO)
-        self.treeView.column(columns[0], anchor=CENTER, minwidth=20, width=20)
+        self.treeView.column(columns[0], anchor=CENTER, minwidth=30, width=20)
         for i in range(1, len(columns)):
             self.treeView.column(columns[i], anchor=W, minwidth=100, width=100)
         
@@ -184,4 +185,80 @@ class CustomersFrame(Frame):
             self.treeView.heading(columns[i], text=columns[i], anchor=W)
             
         display_customers_data(self.treeView)
+
+
+    def __saveDeviceInformation(self):
+        device_manufacturer = self.manufacturerEntry.get()
+        type = self.typeEntry.get()
+        inductance = self.inductanceEntry.get()
+        dimensions = self.dimensionsEntry.get()
+        name = self.nameEntry.get()
+        surname =  self.surnameEntry.get()
+        device = Device(
+            device_manufacturer.capitalize(), 
+            type.capitalize(), 
+            inductance, 
+            dimensions, 
+            name.capitalize(), 
+            surname.capitalize())
+        if (device_manufacturer != "" and type != "" and inductance != "" and dimensions != "" and name != "" and surname != ""):
+            try:
+                inductance = float(inductance)
+            except:
+                err = 1
+            else:
+                err = 0
+            if (err == 1):
+                self.messageDevice.configure(text="Enter a numeric for inductance")
+            else:
+                deviceDAO = DeviceDAO()
+                result = deviceDAO.register_device(device)
+                if (result):
+                    print("Saved!")
+                    self.manufacturerEntry.config(bg="green")
+                    self.typeEntry.config(bg="green")
+                    self.inductanceEntry.config(bg="green")
+                    self.dimensionsEntry.config(bg="green")
+                    self.nameEntry.config(bg="green")
+                    self.surnameEntry.config(bg="green")
+                    self.deviceWindow.after(1000, self.deviceWindow.destroy)
+                else:
+                    self.messageDevice.configure(text="Customer information not found") 
+        else:
+            self.messageDevice.configure(text="All information must be provided !")
+        
+    
+    def registerDevice(self):
+        self.deviceWindow = Tk()
+        self.deviceWindow.title("Device Registration")
+        frame = Frame(self.deviceWindow, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
+        frame.pack(ipadx=5, ipady=20)
+        Label(frame, text="Device Registration", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
+                         width=40, height=3, font="sans-serif 18 bold").grid(row=0, column=0, padx=20, pady=20)
+        formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
+        formFrame.grid(row=1, column=0, padx=10, pady=10)
+        Label(formFrame, text="Device Manufacturer*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=0, padx=20, pady=10, sticky=W)
+        self.manufacturerEntry = Entry(formFrame, width=50)
+        self.manufacturerEntry.grid(row=0, column=1, padx=20)
+        Label(formFrame, text="Type*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=1, padx=20, pady=10, sticky=W)
+        self.typeEntry = Entry(formFrame, width=50)
+        self.typeEntry.grid(row=1, column=1, padx=20)
+        Label(formFrame, text="Inductance*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=2, padx=20, pady=10, sticky=W)
+        self.inductanceEntry = Entry(formFrame, width=50)
+        self.inductanceEntry.grid(row=2, column=1, padx=20)
+        Label(formFrame, text="Dimensions*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=3, padx=20, pady=10, sticky=W)
+        self.dimensionsEntry = Entry(formFrame, width=50)
+        self.dimensionsEntry.grid(row=3, column=1, padx=20)
+        Label(formFrame, text="Name*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=4, padx=20, pady=10, sticky=W)
+        self.nameEntry = Entry(formFrame, width=50)
+        self.nameEntry.grid(row=4, column=1, padx=20)
+        Label(formFrame, text="Surname*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=5, padx=20, pady=10, sticky=W)
+        self.surnameEntry = Entry(formFrame, width=50)
+        self.surnameEntry.grid(row=5, column=1, padx=20)
+
+        self.messageDevice = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
+        self.messageDevice.grid(row=6, column=1, padx=5, pady=5)
+        Button(formFrame, text="Save", command=self.__saveDeviceInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=0, padx=30, pady=20)
+        Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=1, padx=10, pady=20)
+        self.deviceWindow.mainloop()
 
