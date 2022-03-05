@@ -5,4 +5,4 @@
 - The project database must be uploaded to the local DBMS
 
 ### When all this is done, launch or compile the file 
-    Interface.py
+    Main.py
