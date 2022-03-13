@@ -1,21 +1,17 @@
 from tkinter import *
-from Views.ButtonsFrame import Buttons
-from Views.CursorsFrame import Cursors
-from Views.FormulaFrame import Formula
-from Views.GraphCanvas import Graph
-from Views.ImageCanvas import ImageCanvas
 
 
 class MeasuresFrame(Frame):
     def __init__(self, root):
-        Frame.__init__(self, master=root, width=780, height=450, background="mediumslateblue", highlightbackground="black", highlightthickness=3)
-        self.canvasGraph = Graph(self)
-        self.canvasGraph.grid(row=0, column=0, padx=15, pady=5)
-        self.canvasImage = ImageCanvas(self)
-        self.canvasImage.grid(row=0, column=1, padx=15, pady=5)
-        self.optionsFrame = Frame(self, width=730, background="lightgrey")
-        self.optionsFrame.grid(row=1, column=0, columnspan=2, padx=15, pady=5)
-        Cursors(self.optionsFrame).pack(side=LEFT, padx=10, pady=5)
-        Formula(self.optionsFrame).pack(side=LEFT, padx=10, pady=5)
-        Buttons(self.optionsFrame).pack(side=LEFT, padx=10, pady=5)
+        Frame.__init__(self, master=root, width=780, height=450, background="red", highlightbackground="black", highlightthickness=3)
+        self.canvas = Canvas(self, width=700, height=300, background="white")
+        self.canvas.grid(row=0, column=0,columnspan=4, padx=30, pady=5)
+        self.radio1 = Radiobutton(self, text="0 V", background="red", font="Sans-Serif 15")
+        self.radio1.grid(row=1, column=0)
+        self.radio2 = Radiobutton(self, text="12 V", background="red", font="Sans-Serif 15")
+        self.radio2.grid(row=2, column=0)
+        self.radio3 = Radiobutton(self, text="24 V", background="red", font="Sans-Serif 15")
+        self.radio3.grid(row=3, column=0)
+        Button(self, text="Measure Start", background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=2, column=1)
+        Button(self, text="Measure End", background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=2, column=2)
         
