@@ -271,7 +271,7 @@ class CustomersFrame(Frame):
         self.messageDevice = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
         self.messageDevice.grid(row=6, column=1, padx=5, pady=5)
         Button(formFrame, text="Save", command=self.__saveDeviceInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=0, padx=30, pady=20)
-        Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=1, padx=10, pady=20)
+        Button(formFrame, text="Cancel", command=self.deviceWindow.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=1, padx=10, pady=20)
         self.deviceWindow.mainloop()
 
 
@@ -343,4 +343,3 @@ class CustomersFrame(Frame):
             self.window.title("Error")
             Label(self.window, text="Select a customer to update !", foreground="red", width=40, height=3, font="sans-serif 18 bold").pack(padx=20, pady=20)
 
-            

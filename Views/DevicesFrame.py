@@ -60,7 +60,9 @@ class DevicesFrame(Frame):
 
         # BUTTON SECTION DEVICES
         self.registerDeviceButton = Button(self, text="Register", command=self.registerDevice, background="green", foreground="white", font="Sans-Serif 15 bold")
-        self.registerDeviceButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
+        self.registerDeviceButton.grid(row=1, column=0, padx=10, pady=10, ipadx=5, ipady=5)
+        self.updateDeviceButton = Button(self, text="Update", command=self.updateDevice, background="green", foreground="white", font="Sans-Serif 15 bold")
+        self.updateDeviceButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
         self.registerCustomerButton = Button(self, text="Register Customer", command=self.registerCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
         self.registerCustomerButton.grid(row=1, column=4, columnspan=3, padx=10, pady=10, ipadx=5, ipady=5)
         self.reloadButton = Button(self, text="Reload", command=self.reload, background="yellow", foreground="black", font="Sans-Serif 15 bold")
@@ -68,6 +70,9 @@ class DevicesFrame(Frame):
         self.deleteDeviceButton = Button(self, text="Delete", command=self.deleteDevice, background="darkred", foreground="white", font="Sans-Serif 15 bold")
         self.deleteDeviceButton.grid(row=1, column=7, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
         # END BUTTON SECTION DEVICES
+
+        # Variable permettant de savoir quel option est choisie entre Register et Update
+        self.__check = 0
     
 
     def __saveDeviceInformation(self):
@@ -95,9 +100,13 @@ class DevicesFrame(Frame):
                 self.message.configure(text="Enter a numeric for inductance")
             else:
                 deviceDAO = DeviceDAO()
-                result = deviceDAO.register_device(device)
+                if self.__check == 1:
+                    result = deviceDAO.register_device(device)
+                else:
+                    selected = self.treeView.focus()
+                    values = self.treeView.item(selected, "values")
+                    result = deviceDAO.update_device(device, int(values[0]))
                 if (result):
-                    print("Saved!")
                     self.manufacturerEntry.config(bg="green")
                     self.typeEntry.config(bg="green")
                     self.inductanceEntry.config(bg="green")
@@ -112,6 +121,7 @@ class DevicesFrame(Frame):
         
     
     def registerDevice(self):
+        self.__check = 1
         self.window = Tk()
         self.window.title("Device Registration")
         frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
@@ -259,5 +269,65 @@ class DevicesFrame(Frame):
         self.messageCustomer = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
         self.messageCustomer.grid(row=8, column=1, padx=5, pady=5)
         Button(formFrame, text="Save", command=self.__saveCustomerInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=9, column=0, padx=30, pady=20)
-        Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=9, column=1, padx=10, pady=20)
+        Button(formFrame, text="Cancel", command=self.customerWindow.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=9, column=1, padx=10, pady=20)
         self.customerWindow.mainloop()
+
+
+    def updateDevice(self):
+        self.__check = 2
+        # Recuperation des donnees du device choisi
+        selected = self.treeView.focus()
+        if (selected):
+            values = self.treeView.item(selected, "values")
+            # Affichage pour modification
+            self.window = Tk()
+            self.window.title("Update Device")
+            frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
+            frame.pack(ipadx=5, ipady=20)
+            Label(frame, text="Update Device Informations", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
+                            width=40, height=3, font="sans-serif 18 bold").grid(row=0, column=0, padx=20, pady=20)
+            formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
+            formFrame.grid(row=1, column=0, padx=10, pady=10)
+            Label(formFrame, text="ID =====> "+values[0], background="red", foreground="white", font="sans-serif 15 bold").grid(row=0, padx=20, pady=10, sticky=W)
+            Label(formFrame, text="Device Manufacturer*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=1, padx=20, pady=10, sticky=W)
+            self.manufacturerEntry = Entry(formFrame, width=50)
+            self.manufacturerEntry.grid(row=1, column=1, padx=20)
+            self.manufacturerEntry.delete('0', 'end')
+            self.manufacturerEntry.insert('0', values[1])
+            Label(formFrame, text="Type*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=2, padx=20, pady=10, sticky=W)
+            self.typeEntry = Entry(formFrame, width=50)
+            self.typeEntry.grid(row=2, column=1, padx=20)
+            self.typeEntry.delete('0', 'end')
+            self.typeEntry.insert('0', values[2])
+            Label(formFrame, text="Inductance*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=3, padx=20, pady=10, sticky=W)
+            self.inductanceEntry = Entry(formFrame, width=50)
+            self.inductanceEntry.grid(row=3, column=1, padx=20)
+            self.inductanceEntry.delete('0', 'end')
+            self.inductanceEntry.insert('0', values[3])
+            Label(formFrame, text="Dimensions*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=4, padx=20, pady=10, sticky=W)
+            self.dimensionsEntry = Entry(formFrame, width=50)
+            self.dimensionsEntry.grid(row=4, column=1, padx=20)
+            self.dimensionsEntry.delete('0', 'end')
+            self.dimensionsEntry.insert('0', values[4])
+            Label(formFrame, text="Name*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=5, padx=20, pady=10, sticky=W)
+            self.nameEntry = Entry(formFrame, width=50)
+            self.nameEntry.grid(row=5, column=1, padx=20)
+            self.nameEntry.delete('0', 'end')
+            self.nameEntry.insert('0', values[5])
+            Label(formFrame, text="Surname*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=6, padx=20, pady=10, sticky=W)
+            self.surnameEntry = Entry(formFrame, width=50)
+            self.surnameEntry.grid(row=6, column=1, padx=20)
+            self.surnameEntry.delete('0', 'end')
+            self.surnameEntry.insert('0', values[6])
+
+            self.message = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
+            self.message.grid(row=7, column=1, padx=5, pady=5)
+            Button(formFrame, text="Update", command=self.__saveDeviceInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=8, column=0, padx=30, pady=20)
+            Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=8, column=1, padx=10, pady=20)
+            self.window.mainloop()
+        else:
+            # Affichage en cas de non selection de customer
+            self.window = Tk()
+            self.window.title("Error")
+            Label(self.window, text="Select a device to update !", foreground="red", width=40, height=3, font="sans-serif 18 bold").pack(padx=20, pady=20)
+
