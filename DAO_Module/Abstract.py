@@ -18,6 +18,10 @@ class AbstractCustomerDAO(ABC):
     def get_last_customers():
         pass
 
+    # Modification des donnees d'un customer
+    def update_customer (customer, id_customer):
+        pass
+
 
 class AbstractDeviceDAO(ABC):
 
@@ -35,4 +39,8 @@ class AbstractDeviceDAO(ABC):
 
     # Recuperer la liste des derniers devices
     def get_last_devices():
+        pass
+
+    # Modification des donnees d'un device
+    def update_device (device, id_device):
         pass

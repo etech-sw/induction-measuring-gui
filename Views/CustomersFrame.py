@@ -60,14 +60,19 @@ class CustomersFrame(Frame):
 
         # BUTTON SECTION CUSTOMERS
         self.registerCustomerButton = Button(self, text="Register", command=self.registerCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
-        self.registerCustomerButton.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
+        self.registerCustomerButton.grid(row=1, column=0, padx=10, pady=10, ipadx=5, ipady=5)
+        self.updateCustomerButton = Button(self, text="Update", command=self.updateCustomer, background="green", foreground="white", font="Sans-Serif 15 bold")
+        self.updateCustomerButton.grid(row=1, column=1, padx=10, pady=10, ipadx=5, ipady=5)
         self.registerDeviceButton = Button(self, text="Register Device", command=self.registerDevice, background="green", foreground="white", font="Sans-Serif 15 bold")
-        self.registerDeviceButton.grid(row=1, column=4, columnspan=3, padx=10, pady=10, ipadx=5, ipady=5)
+        self.registerDeviceButton.grid(row=1, column=4, columnspan=4, padx=10, pady=10, ipadx=5, ipady=5)
         self.reloadButton = Button(self, text="Reload", command=self.reload, background="yellow", foreground="black", font="Sans-Serif 15 bold")
-        self.reloadButton.grid(row=1, column=3, padx=10, pady=10, ipadx=5, ipady=5)
+        self.reloadButton.grid(row=1, column=2, padx=10, pady=10, ipadx=5, ipady=5)
         self.deleteCustomerButton = Button(self, text="Delete", command=self.deleteCustomer, background="darkred", foreground="white", font="Sans-Serif 15 bold")
-        self.deleteCustomerButton.grid(row=1, column=7, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
+        self.deleteCustomerButton.grid(row=1, column=8, columnspan=2, padx=10, pady=10, ipadx=5, ipady=5)
         # END BUTTON SECTION CUSTOMERS
+
+        # Variable permettant de savoir quel option est choisie entre Register et Update
+        self.__check = 0
 
 
     def __saveCustomerInformation(self):
@@ -99,8 +104,14 @@ class CustomersFrame(Frame):
                 self.message.configure(text="The phone number is invalid: It must be a set of at least 9 digits !")
             else:
                 customerDAO = CustomerDAO()
-                customerDAO.register_customer(customer)
-                print("Saved !")
+                if self.__check == 1:
+                    customerDAO.register_customer(customer)
+                    print("Saved !")
+                else:
+                    selected = self.treeView.focus()
+                    values = self.treeView.item(selected, "values")
+                    customerDAO.update_customer(customer, int(values[0]))
+                    print("Updated !")
                 self.companyEntry.config(bg="green")
                 self.streetEntry.config(bg="green")
                 self.locationEntry.config(bg="green")
@@ -115,6 +126,7 @@ class CustomersFrame(Frame):
     
     
     def registerCustomer(self):
+        self.__check = 1
         self.window = Tk()
         self.window.title("Customer Registration")
         frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
@@ -262,3 +274,73 @@ class CustomersFrame(Frame):
         Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=1, padx=10, pady=20)
         self.deviceWindow.mainloop()
 
+
+    def updateCustomer(self):
+        self.__check = 2
+        # Recuperation des donnees enregistrees du customer
+        selected = self.treeView.focus()
+        if (selected):
+            values = self.treeView.item(selected, "values")
+            # Affiche pour modification
+            self.window = Tk()
+            self.window.title("Update Customer")
+            frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
+            frame.pack(ipadx=5, ipady=20)
+            Label(frame, text="Update Customer", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
+                            width=40, height=3, font="sans-serif 18 bold").grid(row=0, column=0, padx=20, pady=20)
+            formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
+            formFrame.grid(row=1, column=0, padx=10, pady=10)
+            Label(formFrame, text="ID =====> "+values[0], background="red", foreground="white", font="sans-serif 15 bold").grid(row=0, padx=20, pady=10, sticky=W)
+            Label(formFrame, text="Company*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=1, padx=20, pady=10, sticky=W)
+            self.companyEntry = Entry(formFrame, width=50, textvariable=StringVar())
+            self.companyEntry.grid(row=1, column=1, padx=20)
+            self.companyEntry.delete('0', 'end')
+            self.companyEntry.insert('0', values[1])
+            Label(formFrame, text="Street*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=2, padx=20, pady=10, sticky=W)
+            self.streetEntry = Entry(formFrame, width=50)
+            self.streetEntry.grid(row=2, column=1, padx=20)
+            self.streetEntry.delete('0', 'end')
+            self.streetEntry.insert('0', values[2])
+            Label(formFrame, text="Location*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=3, padx=20, pady=10, sticky=W)
+            self.locationEntry = Entry(formFrame, width=50)
+            self.locationEntry.grid(row=3, column=1, padx=20)
+            self.locationEntry.delete('0', 'end')
+            self.locationEntry.insert('0', values[3])
+            Label(formFrame, text="Postal Code*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=4, padx=20, pady=10, sticky=W)
+            self.postalEntry = Entry(formFrame, width=50)
+            self.postalEntry.grid(row=4, column=1, padx=20)
+            self.postalEntry.delete('0', 'end')
+            self.postalEntry.insert('0', values[4])
+            Label(formFrame, text="Phone*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=5, padx=20, pady=10, sticky=W)
+            self.phoneEntry = Entry(formFrame, width=50)
+            self.phoneEntry.grid(row=5, column=1, padx=20)
+            self.phoneEntry.delete('0', 'end')
+            self.phoneEntry.insert('0', values[5])
+            Label(formFrame, text="Email*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=6, padx=20, pady=10, sticky=W)
+            self.emailEntry = Entry(formFrame, width=50)
+            self.emailEntry.grid(row=6, column=1, padx=20)
+            self.emailEntry.delete('0', 'end')
+            self.emailEntry.insert('0', values[6])
+            Label(formFrame, text="Name*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=7, padx=20, pady=10, sticky=W)
+            self.nameEntry = Entry(formFrame, width=50)
+            self.nameEntry.grid(row=7, column=1, padx=20)
+            self.nameEntry.delete('0', 'end')
+            self.nameEntry.insert('0', values[7])
+            Label(formFrame, text="Surname*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=8, padx=20, pady=10, sticky=W)
+            self.surnameEntry = Entry(formFrame, width=50)
+            self.surnameEntry.grid(row=8, column=1, padx=20)
+            self.surnameEntry.delete('0', 'end')
+            self.surnameEntry.insert('0', values[8])
+
+            self.message = Label(formFrame, text="", font="sans-serif 10", foreground="black", background="red")
+            self.message.grid(row=9, column=1, padx=5, pady=5)
+            Button(formFrame, text="Update", command=self.__saveCustomerInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=10, column=0, padx=30, pady=20)
+            Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=10, column=1, padx=10, pady=20)
+            self.window.mainloop()
+        else:
+            # Affichage en cas de non selection de customer
+            self.window = Tk()
+            self.window.title("Error")
+            Label(self.window, text="Select a customer to update !", foreground="red", width=40, height=3, font="sans-serif 18 bold").pack(padx=20, pady=20)
+
+            
