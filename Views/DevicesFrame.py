@@ -130,7 +130,7 @@ class DevicesFrame(Frame):
         self.window = Tk()
         self.window.title("Device Registration")
         frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-        frame.grid(row=0, column=0, ipadx=5, ipady=20)
+        frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
         ### Responsive configuration for element in window
         Grid.rowconfigure(self.window, index=0, weight=1)
         Grid.columnconfigure(self.window, index=0, weight=1)
@@ -258,7 +258,7 @@ class DevicesFrame(Frame):
         self.customerWindow = Tk()
         self.customerWindow.title("Customer Registration")
         frame = Frame(self.customerWindow, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-        frame.grid(row=0, column=0, ipadx=5, ipady=20)
+        frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
         ### Responsive configuration for element in window
         Grid.rowconfigure(self.customerWindow, index=0, weight=1)
         Grid.columnconfigure(self.customerWindow, index=0, weight=1)
@@ -268,9 +268,9 @@ class DevicesFrame(Frame):
         formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
         formFrame.grid(row=1, column=0, padx=10, pady=10)
         ### Responsive configuration for element in frame
-        Grid.rowconfigure(self.customerWindow, index=0, weight=1)
-        Grid.rowconfigure(self.customerWindow, index=1, weight=1)
-        Grid.columnconfigure(self.customerWindow, index=0, weight=1)
+        Grid.rowconfigure(frame, index=0, weight=1)
+        Grid.rowconfigure(frame, index=1, weight=1)
+        Grid.columnconfigure(frame, index=0, weight=1)
         ###
         Label(formFrame, text="Company*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=0, padx=20, pady=10, sticky=W)
         self.companyEntry = Entry(formFrame, width=50)
@@ -322,7 +322,7 @@ class DevicesFrame(Frame):
             self.window = Tk()
             self.window.title("Update Device")
             frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-            frame.grid(row=0, column=0, ipadx=5, ipady=20)
+            frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
             ### Responsive configuration for element in window
             Grid.rowconfigure(self.window, index=0, weight=1)
             Grid.columnconfigure(self.window, index=0, weight=1)

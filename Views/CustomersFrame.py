@@ -137,7 +137,7 @@ class CustomersFrame(Frame):
         self.window = Tk()
         self.window.title("Customer Registration")
         frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-        frame.grid(row=0, column=0, ipadx=5, ipady=20)
+        frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
         ### Responsive configuration for element in window
         Grid.rowconfigure(self.window, index=0, weight=1)
         Grid.columnconfigure(self.window, index=0, weight=1)
@@ -268,7 +268,7 @@ class CustomersFrame(Frame):
         self.deviceWindow = Tk()
         self.deviceWindow.title("Device Registration")
         frame = Frame(self.deviceWindow, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-        frame.grid(row=0, column=0, ipadx=5, ipady=20)
+        frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
         ### Responsive configuration for element in window
         Grid.rowconfigure(self.deviceWindow, index=0, weight=1)
         Grid.columnconfigure(self.deviceWindow, index=0, weight=1)
@@ -326,7 +326,7 @@ class CustomersFrame(Frame):
             self.window = Tk()
             self.window.title("Update Customer")
             frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-            frame.grid(row=0, column=0, ipadx=5, ipady=20)
+            frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
             ### Responsive configuration for element in window
             Grid.rowconfigure(self.window, index=0, weight=1)
             Grid.columnconfigure(self.window, index=0, weight=1)
