@@ -43,3 +43,12 @@ class CustomerDAO (AbstractCustomerDAO):
         return self.__mCursor.fetchall()
 
 
+    def update_customer(self, customer, id_customer):
+        self.__connexion()
+        request = "UPDATE customers SET name = %s, surname = %s, email = %s, phone = %s, company = %s, street = %s, location = %s, postal_code = %s WHERE id = %s"
+        value = (customer.getName(), customer.getSurname(), customer.getEmail(), customer.getPhone(), customer.getCompany(), customer.getStreet(), customer.getLocation(), customer.getPostalCode(), id_customer)
+        self.__mCursor.execute(request, value)
+        self.__mDb.commit()
+        print(f"Informations about {customer.getSurname()} are updated !")
+
+        
