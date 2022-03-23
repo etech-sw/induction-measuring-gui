@@ -6,8 +6,8 @@ class DeviceDAO(AbstractDeviceDAO):
     def __connexion(self):
         self.__mDb = mysql.connect(
             host = "localhost",
-            user = "root",
-            password = "12345678",
+            user = "appuser",
+            password = "hund1234",
             database = "guidatabase"
         )
         self.__mCursor = self.__mDb.cursor()
