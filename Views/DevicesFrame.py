@@ -73,7 +73,12 @@ class DevicesFrame(Frame):
 
         # Variable permettant de savoir quel option est choisie entre Register et Update
         self.__check = 0
-    
+
+        # Responsive configuration
+        for i in range(2):
+            Grid.rowconfigure(self, index=i, weight=1)
+        for i in range(8):
+            Grid.columnconfigure(self, index=i, weight=1)
 
     def __saveDeviceInformation(self):
         device_manufacturer = self.manufacturerEntry.get()
@@ -125,11 +130,20 @@ class DevicesFrame(Frame):
         self.window = Tk()
         self.window.title("Device Registration")
         frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-        frame.pack(ipadx=5, ipady=20)
+        frame.grid(row=0, column=0, ipadx=5, ipady=20)
+        ### Responsive configuration for element in window
+        Grid.rowconfigure(self.window, index=0, weight=1)
+        Grid.columnconfigure(self.window, index=0, weight=1)
+        ###
         Label(frame, text="Device Registration", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
                          width=40, height=3, font="sans-serif 18 bold").grid(row=0, column=0, padx=20, pady=20)
         formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
         formFrame.grid(row=1, column=0, padx=10, pady=10)
+        ### Responsive configuration for element in frame
+        Grid.rowconfigure(frame, index=0, weight=1)
+        Grid.rowconfigure(frame, index=1, weight=1)
+        Grid.columnconfigure(frame, index=0, weight=1)
+        ###
         Label(formFrame, text="Device Manufacturer*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=0, padx=20, pady=10, sticky=W)
         self.manufacturerEntry = Entry(formFrame, width=50)
         self.manufacturerEntry.grid(row=0, column=1, padx=20)
@@ -153,6 +167,14 @@ class DevicesFrame(Frame):
         self.message.grid(row=6, column=1, padx=5, pady=5)
         Button(formFrame, text="Save", command=self.__saveDeviceInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=0, padx=30, pady=20)
         Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=7, column=1, padx=10, pady=20)
+        
+        ### Responsive configuration for elements in frame
+        for i in range(8):
+            Grid.rowconfigure(formFrame, index=i, weight=1)
+        for i in range(2):
+            Grid.columnconfigure(formFrame, index=i, weight=1)
+        ###
+
         self.window.mainloop()
 
 
@@ -236,11 +258,20 @@ class DevicesFrame(Frame):
         self.customerWindow = Tk()
         self.customerWindow.title("Customer Registration")
         frame = Frame(self.customerWindow, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-        frame.pack(ipadx=5, ipady=20)
+        frame.grid(row=0, column=0, ipadx=5, ipady=20)
+        ### Responsive configuration for element in window
+        Grid.rowconfigure(self.customerWindow, index=0, weight=1)
+        Grid.columnconfigure(self.customerWindow, index=0, weight=1)
+        ###
         Label(frame, text="Customer Registration", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
                          width=40, height=3, font="sans-serif 18 bold").grid(row=0, column=0, padx=20, pady=20)
         formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
         formFrame.grid(row=1, column=0, padx=10, pady=10)
+        ### Responsive configuration for element in frame
+        Grid.rowconfigure(self.customerWindow, index=0, weight=1)
+        Grid.rowconfigure(self.customerWindow, index=1, weight=1)
+        Grid.columnconfigure(self.customerWindow, index=0, weight=1)
+        ###
         Label(formFrame, text="Company*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=0, padx=20, pady=10, sticky=W)
         self.companyEntry = Entry(formFrame, width=50)
         self.companyEntry.grid(row=0, column=1, padx=20)
@@ -270,6 +301,14 @@ class DevicesFrame(Frame):
         self.messageCustomer.grid(row=8, column=1, padx=5, pady=5)
         Button(formFrame, text="Save", command=self.__saveCustomerInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=9, column=0, padx=30, pady=20)
         Button(formFrame, text="Cancel", command=self.customerWindow.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=9, column=1, padx=10, pady=20)
+        
+        ### Responsive configuration for elements in frame
+        for i in range(10):
+            Grid.rowconfigure(formFrame, index=i, weight=1)
+        for i in range(2):
+            Grid.columnconfigure(formFrame, index=i, weight=1)
+        ###
+
         self.customerWindow.mainloop()
 
 
@@ -283,11 +322,20 @@ class DevicesFrame(Frame):
             self.window = Tk()
             self.window.title("Update Device")
             frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
-            frame.pack(ipadx=5, ipady=20)
+            frame.grid(row=0, column=0, ipadx=5, ipady=20)
+            ### Responsive configuration for element in window
+            Grid.rowconfigure(self.window, index=0, weight=1)
+            Grid.columnconfigure(self.window, index=0, weight=1)
+            ###
             Label(frame, text="Update Device Informations", background="red", foreground="white", highlightbackground="black", highlightthickness=3,
                             width=40, height=3, font="sans-serif 18 bold").grid(row=0, column=0, padx=20, pady=20)
             formFrame = Frame(frame,  width=600, height=600, background="red", highlightbackground="black", highlightthickness=3)
             formFrame.grid(row=1, column=0, padx=10, pady=10)
+            ### Responsive configuration for element in frame
+            Grid.rowconfigure(frame, index=0, weight=1)
+            Grid.rowconfigure(frame, index=1, weight=1)
+            Grid.columnconfigure(frame, index=0, weight=1)
+            ###
             Label(formFrame, text="ID =====> "+values[0], background="red", foreground="white", font="sans-serif 15 bold").grid(row=0, padx=20, pady=10, sticky=W)
             Label(formFrame, text="Device Manufacturer*", background="red", foreground="white", font="sans-serif 15 bold underline").grid(row=1, padx=20, pady=10, sticky=W)
             self.manufacturerEntry = Entry(formFrame, width=50)
@@ -324,6 +372,14 @@ class DevicesFrame(Frame):
             self.message.grid(row=7, column=1, padx=5, pady=5)
             Button(formFrame, text="Update", command=self.__saveDeviceInformation, width=10, background="green", foreground="white", font="Sans-Serif 15 bold").grid(row=8, column=0, padx=30, pady=20)
             Button(formFrame, text="Cancel", command=self.window.destroy, width=10, background="darkred", foreground="white", font="Sans-Serif 15 bold").grid(row=8, column=1, padx=10, pady=20)
+            
+            ### Responsive configuration for element in form frame
+            for i in range(9):
+                Grid.rowconfigure(formFrame, index=i, weight=1)
+            for i in range(2):
+                Grid.columnconfigure(formFrame, index=i, weight=1)
+            ###
+            
             self.window.mainloop()
         else:
             # Affichage en cas de non selection de customer

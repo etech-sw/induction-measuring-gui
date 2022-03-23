@@ -1,4 +1,4 @@
-from tkinter import Label
+from tkinter import *
 from DAO_Module.CustomerDAO import CustomerDAO
 from DAO_Module.DeviceDAO import DeviceDAO
 
@@ -11,6 +11,8 @@ def display_last_customers(secondFrame):
     # Affichage sur l'interface
     for customer in customers:
         Label(secondFrame, text=str(compt)+"."+customer[1], justify="right", background="red", foreground="white", font="Sans-Serif 10 bold").grid(row=row, column=0, pady=10)
+        # Responsive configuration (same for the next function, so don't need to add here)
+        Grid.rowconfigure(secondFrame, index=row, weight=1)
         compt += 1
         row += 1
         if (compt > 5):

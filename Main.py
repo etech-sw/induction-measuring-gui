@@ -3,7 +3,11 @@ from Views.MainFrame import MainFrame
 
 window = Tk()
 window.title("GUI Interface")
-frame1 = MainFrame(window)
-frame1.pack(ipadx=5, ipady=20)
+frame = MainFrame(window)
+frame.grid(row=0, column=0, sticky="nsew", ipadx=20, ipady=20)
+
+# Responsive configuration
+Grid.rowconfigure(window, index=0, weight=1)
+Grid.columnconfigure(window, index=0, weight=1)
 
 window.mainloop()

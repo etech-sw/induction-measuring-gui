@@ -27,6 +27,12 @@ class MainFrame(Frame):
 
         self.frame = HomeFrame(self)
         self.frame.grid(row=1, column=1, rowspan=7, ipadx=5, ipady=5, padx=5)
+
+        # Responsive configuration
+        for i in range(5):
+            Grid.rowconfigure(self, index=i, weight=1)
+        for i in range(2):
+            Grid.columnconfigure(self, index=i, weight=1)
         
 
     def goToHomePage(self):
