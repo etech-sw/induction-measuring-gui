@@ -4,7 +4,7 @@ import mysql.connector as mysql
 class CustomerDAO (AbstractCustomerDAO):
     def __connexion(self):
         self.__mDb = mysql.connect(
-            host = "127.0.0.1",
+            host = "localhost",
             user = "appuser",
             password = "hund1234",
             database = "guidatabase"
