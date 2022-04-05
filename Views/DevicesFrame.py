@@ -129,7 +129,7 @@ class DevicesFrame(Frame):
         self.__check = 1
         self.window = Tk()
         self.window.title("Device Registration")
-        frame = Frame(self.window, background="lightpink", height=800, width=700, highlightbackground="black", highlightthickness=3)
+        frame = Frame(self.window, background="lightpink", height=780, width=450, highlightbackground="black", highlightthickness=3)
         frame.grid(row=0, column=0, ipadx=5, ipady=20, sticky="nsew")
         ### Responsive configuration for element in window
         Grid.rowconfigure(self.window, index=0, weight=1)

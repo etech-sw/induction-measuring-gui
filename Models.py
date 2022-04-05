@@ -65,3 +65,22 @@ class Device(object):
 
 
 
+class Measurement(object):
+
+    def __init__(self, device_id, measure_at, voltage, intensity):
+        self.__device_id = device_id
+        self.__measure_at = measure_at
+        self.__voltage = voltage
+        self.__intensity = intensity
+
+    def getDeviceId(self):
+        return self.__device_id
+
+    def getMeasureAt(self):
+        return self.__measure_at
+
+    def getVoltage(self):
+        return self.__voltage
+
+    def getIntensity(self):
+        return self.__intensity
